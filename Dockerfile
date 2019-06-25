@@ -1,30 +1,26 @@
-FROM ubuntu:xenial
+FROM ubuntu:19.04
+LABEL url="https://github.com/nvllsvm/docker-killingfloor2-server"
 
-RUN \
-	apt-get -y update && \
-	apt-get -y install wget lib32gcc1 && \
-	apt-get clean && \
-	find /var/lib/apt/lists -type f | xargs rm -vf
+RUN apt-get -y update \
+ && apt-get -y install wget lib32gcc1 \
+ && apt-get clean \
+ && find /var/lib/apt/lists -type f | xargs rm -vf
 
-RUN useradd -m steam
-
-WORKDIR /home/steam
-USER steam
-
-ADD kf2_functions.sh kf2_functions.sh 
-ADD main main 
-
-# Steam port
-EXPOSE 20560/udp
-
-# Query port - used to communicate with the master server
+# Query - used to communicate with the master server
 EXPOSE 27015/udp
 
-# Game port - primary comms with players
+# Game - primary comms with players
 EXPOSE 7777/udp
 
-# Web Admin port
+# Web Admin
 EXPOSE 8080/tcp
 
-ENTRYPOINT ["/bin/bash", "main"]
+ENV KF_PORT=7777 \
+    KF_QUERY_PORT=27015 \
+    KF_WEBADMIN_PORT=8080
 
+VOLUME /data
+
+COPY docker-entrypoint.sh /
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
