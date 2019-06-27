@@ -45,6 +45,12 @@ function require_config() {
 
 }
 
+function random_map() {
+    MAP="$(find "$SERVER_DIR/KFGame/BrewedPC/Maps" -type f -name 'KF-*.kfm' -exec basename {} \; | sort --random-sort | head -n 1)"
+    echo -n "${MAP%%.*}"
+}
+
+
 function load_config() {
     # Default to survival
     export KF_GAME_MODE="${KF_GAME_MODE:-Survival}"
@@ -53,7 +59,7 @@ function load_config() {
     fi
 
     # find /path/to/volume -name '*KF-*kfm' | xargs -n 1 basename -s .kfm\n"
-    export KF_MAP="${KF_MAP:-KF-BioticsLab}"
+    export KF_MAP="${KF_MAP:-$(random_map)}"
 
     # 0 - normal, 1 - hard, 2 - suicidal, 3 - hell on earth
     export KF_DIFFICULTY="${KF_DIFFICULTY:-0}"
