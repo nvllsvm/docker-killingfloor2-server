@@ -65,7 +65,7 @@ function load_config() {
     export KF_DIFFICULTY="${KF_DIFFICULTY:-0}"
 
     # Used for web console and in-game logins
-    export KF_ADMIN_PASS="${KF_ADMIN_PASS:-secret}"
+    export KF_ADMIN_PASS="${KF_ADMIN_PASS:-$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 64)}"
 
     # Setting this creates a private server
     export KF_GAME_PASS="${KF_GAME_PASS}"
