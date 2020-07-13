@@ -1,8 +1,8 @@
-FROM ubuntu:19.04
+FROM ubuntu:20.04
 LABEL url="https://github.com/nvllsvm/docker-killingfloor2-server"
 
 RUN apt-get -y update \
- && apt-get -y install wget lib32gcc1 \
+ && apt-get -y install wget lib32gcc1 libcurl4 \
  && apt-get clean \
  && find /var/lib/apt/lists -type f | xargs rm -vf
 
