@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:18.04
 LABEL url="https://github.com/nvllsvm/docker-killingfloor2-server"
 
 RUN apt-get -y update \
